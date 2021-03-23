@@ -21,6 +21,26 @@ public class baza {
         return con;
     }
 
+    public static int idUporabnik(String mail, String geslo)
+    {
+        String com = "SELECT id_u FROM uporabniki WHERE email ='" + mail + "' AND pass = '" + geslo + "';";
+        int idu = 0;
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                idu = rez.getInt(1);
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("idUporabnik() napaka " + e );
+        }
+       return idu;
+    }
     // Izpiše vse kraje
     public static ArrayList<String> SelectKraji()
     {

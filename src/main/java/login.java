@@ -30,8 +30,12 @@ public class login {
             String pass = new String(password);
             //System.out.print(username);
             boolean b = baza.SelectLogin(email, pass);
-            //System.out.print(email);
-            //System.out.print(b);
+            if(b == true)
+            {
+                int id = baza.idUporabnik(email,pass);
+                new Mainpage(id);
+
+            }
         });
 
     }

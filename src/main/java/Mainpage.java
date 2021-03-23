@@ -4,10 +4,11 @@ import javax.swing.JScrollPane;
 
 public class Mainpage {
     private JPanel main;
+    private JTabbedPane tabbedPane1;
     private JScrollPane scrollmain;
     private JTable tabela;
 
-    public Mainpage()
+    public Mainpage(int id)
 {
     JFrame frame = new JFrame("RentACar");
     String[][] data = {
@@ -27,6 +28,7 @@ public class Mainpage {
     frame.pack();
 
     frame.setVisible(true);
+    System.out.print(id);
 
 }
 
