@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mavenrent" />
+        <module name="RentACar-master" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mavenrent" target="15" />
+      <module name="RentACar-master" target="15" />
+    </bytecodeTargetLevel>
   </component>
 </project>

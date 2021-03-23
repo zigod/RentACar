@@ -27,11 +27,11 @@ public class login {
             String email = emailField.getText();
             char[] password = passwordField.getPassword()       ;
 
-            String pass = new String(password);
+            //String pass = new String(password);
             //System.out.print(username);
-            boolean b = baza.SelectLogin(email, pass);
+            //boolean b = baza.SelectLogin(email, pass);
             //System.out.print(email);
-            System.out.print(b);
+            //System.out.print(b);
         });
 
     }
