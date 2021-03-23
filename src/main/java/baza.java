@@ -70,4 +70,31 @@ public class baza {
 
     }
 
+    //preveri pri login
+    public static boolean SelectLogin(String email_, String pass_)
+    {
+        String com = "SELECT email, pass FROM uporabniki WHERE (email='" + email_ + "') AND (pass='" + pass_ + "');";
+        boolean potrditev = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                String l = rez.getString(1);
+                if(l != null)
+                {
+                    potrditev = true;
+                }
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("Login napaka " + e );
+        }
+        return potrditev;
+    }
+
 }
