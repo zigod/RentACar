@@ -24,7 +24,7 @@ public class baza {
     // Izpiše vse kraje
     public static ArrayList<String> SelectKraji()
     {
-        String com = "SELECT ime_k, posta FROM kraji";
+        String com = "SELECT ime_k,posta FROM kraji";
         ArrayList<String> kraji = new ArrayList<String>();
 
         try (Connection con = connect();
@@ -47,32 +47,27 @@ public class baza {
         return kraji;
 
     }
-
-    //preveri pri login
-    public static boolean SelectLogin(String email_, String pass_)
+    // registracija vrne bool
+    public static boolean registracija(String ime,String email,String pass,String telefon, String datum, String kraj,String priimek)
     {
-        String com = "SELECT email, pass FROM uporabniki WHERE (email='" + email_ + "') AND (pass='" + pass_ + "');";
-        boolean potrditev = false;
-
+        String com = "SELECT registracija('" + ime + "','" + email + "','" + pass + "','" + telefon + "','" + datum + "','" + priimek + "','" + kraj + "')";
+        boolean ok = true;
         try (Connection con = connect();
              Statement stat = con.createStatement();
              ResultSet rez = stat.executeQuery(com))
         {
 
             while (rez.next()) {
-                String l = rez.getString(1);
-                if(l != null)
-                {
-                    potrditev = true;
-                }
+                ok = rez.getBoolean(1);
             }
 
         }
         catch (SQLException e) {
 
-            System.out.println("Login napaka " + e );
+            System.out.println("registracija() napaka " + e );
         }
-        return potrditev;
+        return ok;
+
     }
 
 }

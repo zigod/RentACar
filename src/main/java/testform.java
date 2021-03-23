@@ -17,16 +17,11 @@ public class testform {
         frame.setSize(300, 300);
 
         frame.setVisible(true);
-        Fill_krajcombo();
+
 
     }
 
-    private void Fill_krajcombo()
-    {
-        DefaultComboBoxModel mod = new DefaultComboBoxModel();
-        mod.addAll(baza.SelectKraji());
-        krajicombo.setModel(mod);
-    }
+
 
 }
 
