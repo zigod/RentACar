@@ -1,10 +1,12 @@
+import javax.swing.*;
+
 public class Oglasi {
-    int id_o;
-    String cena;
-    String pot_slika;
-    String uporabnik_o;
-    String opis_avta;
-    String kraj;
+    private int id_o;
+    private String cena;
+    private String pot_slika;
+    public String uporabnik_o;
+    private String opis_avta;
+    private String kraj;
 
     Oglasi(int id,String cenao, String pot,String uporabnik, String opis, String kraja)
     {
@@ -16,8 +18,21 @@ public class Oglasi {
         kraj = kraja;
     }
 
+
+    Oglasi(String xd,String pot)
+    {
+        uporabnik_o = xd;
+        pot_slika = pot;
+    }
+
     @Override
     public String toString() {
-        return pot_slika + "|" + opis_avta + "|" + cena + "|" +  uporabnik_o + "|" + kraj;
+        return  opis_avta + "|" + cena + "|" +  uporabnik_o + "|" + kraj;
+    }
+
+    public Icon getImg()
+    {
+        ImageIcon slika = new ImageIcon(getClass().getResource(pot_slika));
+        return slika;
     }
 }

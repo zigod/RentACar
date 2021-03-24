@@ -37,6 +37,9 @@
                   <component id="9013" class="javax.swing.JList" binding="izpispodatkov">
                     <constraints/>
                     <properties/>
+                    <clientProperties>
+                      <List.isFileList class="java.lang.Boolean" value="false"/>
+                    </clientProperties>
                   </component>
                 </children>
               </scrollpane>
