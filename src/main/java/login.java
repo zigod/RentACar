@@ -7,6 +7,8 @@ public class login {
     private JPasswordField passwordField;
     private JButton prijavaButton;
 
+    public static int id_;
+
     public login()
     {
         JFrame frame = new JFrame("Login");
@@ -17,6 +19,7 @@ public class login {
         frame.setVisible(true);
 
         setActionListeners();
+
     }
 
     private void setActionListeners()
@@ -33,6 +36,7 @@ public class login {
             if(b == true)
             {
                 int id = baza.idUporabnik(email,pass);
+                id_ = id;
                 new Mainpage(id);
 
             }
