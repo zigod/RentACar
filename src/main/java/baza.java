@@ -64,10 +64,8 @@ public class baza {
                 String imek = rez.getString(8);
                 int id_o = rez.getInt(9);
 
-                String opis_avta = imez + "\r\n" + imem  + "\r\n" + letnik;
-                String uporabnik = imeu + " " + priimeku;
 
-                Oglasi o = new Oglasi(id_o,cena,pot,uporabnik,opis_avta,imek);
+                Oglasi o = new Oglasi(id_o,cena,pot,imeu,priimeku,letnik,imem,imez,imek);
                 k_oglasi.add(o);
             }
 

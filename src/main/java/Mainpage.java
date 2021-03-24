@@ -1,6 +1,8 @@
 import javax.swing.*;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -39,36 +41,49 @@ public class Mainpage extends javax.swing.JFrame{
         frame.setVisible(true);
 
 
-        // ArrayList<Oglasi> oglas = baza.IzpisOglasi();
-
-
-        izpispodatkov.setCellRenderer(new RenderPls());
-        izpispodatkov.setModel(dm);
 
 
 
-    /*
-    DefaultListModel<String> ListOglasov = new DefaultListModel<>();
-
-    for (Oglasi ogl : oglas)
-    {
-        String prikaznioglas = ogl.toString();
+        setActionListeners();
 
 
-        ListOglasov.addElement(prikaznioglas);
-    }
-    izpispodatkov.setModel(ListOglasov);
-    */
+
+
+
+
 
     }
 
+    private void setActionListeners() {
+        izpispodatkov.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                String pod = ((Oglasi)izpispodatkov.getSelectedValue()).prikaz;
+                pod = pod.replace("<html>","");
+                pod = pod.replace("</html>","");
+                pod = pod.replace("<br>","");
+
+                System.out.print(pod);
+            }
+        });
+    }
 
     public void polnjenje()
     {
-        String x = "PLSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS";
+        ArrayList<Oglasi> oglas = baza.IzpisOglasi();
         dm.clear();
-        dm.addElement(new Oglasi(x,"bruh.jpg"));
 
+        for (Oglasi ogl : oglas)
+        {
+            String podatki = ogl.toString();
+            String pot = ogl.pot_slika;
+            dm.addElement(new Oglasi(podatki,pot));
+
+
+        }
+        izpispodatkov.setCellRenderer(new RenderPls());
+        izpispodatkov.setModel(dm);
 
     }
 

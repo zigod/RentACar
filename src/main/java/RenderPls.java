@@ -15,7 +15,7 @@ public class RenderPls  extends DefaultListCellRenderer implements ListCellRende
 
 
 
-        setText(o.uporabnik_o);
+        setText(o.prikaz);
         setIcon(o.getImg());
 
         if(isSelected)

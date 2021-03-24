@@ -3,31 +3,57 @@ import javax.swing.*;
 public class Oglasi {
     private int id_o;
     private String cena;
-    private String pot_slika;
-    public String uporabnik_o;
-    private String opis_avta;
+    public String pot_slika;
+
+
+    private String Znamka;
+    private String Model;
+    private String Letnik;
+
+    private String imeuporabnika;
+    private String priimek;
+
     private String kraj;
 
-    Oglasi(int id,String cenao, String pot,String uporabnik, String opis, String kraja)
+    public String prikaz;
+
+    Oglasi(int id,String cenao, String pot,String imeu,String pri, String letn,String mod,String zna, String kraja)
     {
         id_o = id;
         cena = cenao;
         pot_slika = pot;
-        uporabnik_o = uporabnik;
-        opis_avta = opis;
+        Znamka = zna;
+        Letnik = letn;
+        Model = mod;
+
+        imeuporabnika  = imeu;
+        priimek = pri;
         kraj = kraja;
     }
 
 
-    Oglasi(String xd,String pot)
+   //prikazni podatki
+   Oglasi(String prikazpodatki,String pot)
     {
-        uporabnik_o = xd;
+        prikaz = prikazpodatki;
         pot_slika = pot;
     }
 
+
     @Override
     public String toString() {
-        return  opis_avta + "|" + cena + "|" +  uporabnik_o + "|" + kraj;
+        return  "<html>"+ OpisAvtaKratko() + "Cena: " + cena + "<br>" +  Uporabnikpod() + "Kraj oglasa: " + kraj + "</html>";
+    }
+
+    public String OpisAvtaKratko()
+    {
+        String opis = "Znamka: " + Znamka + "<br>" + "Model: " + Model + "<br>" + "Letnik: " + Letnik + "<br>";
+        return opis;
+    }
+    public String Uporabnikpod()
+    {
+        String pod = "Ime oglasevalca: " + imeuporabnika + "<br>" + "Priimek oglasevalca: " + priimek +  "<br>";
+        return pod;
     }
 
     public Icon getImg()
