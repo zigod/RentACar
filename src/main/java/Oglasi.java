@@ -56,9 +56,10 @@ public class Oglasi {
         return pod;
     }
 
-    public Icon getImg()
+    public ImageIcon getImg()
     {
-        ImageIcon slika = new ImageIcon(getClass().getResource(pot_slika));
+
+        ImageIcon slika = new ImageIcon((new ImageIcon(getClass().getResource(pot_slika)).getImage().getScaledInstance(320, 240, java.awt.Image.SCALE_SMOOTH)));
         return slika;
     }
 }

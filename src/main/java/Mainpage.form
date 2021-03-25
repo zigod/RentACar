@@ -36,7 +36,9 @@
                 <children>
                   <component id="9013" class="javax.swing.JList" binding="izpispodatkov">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font name="Courier New" size="18"/>
+                    </properties>
                     <clientProperties>
                       <List.isFileList class="java.lang.Boolean" value="false"/>
                     </clientProperties>
