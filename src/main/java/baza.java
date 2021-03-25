@@ -20,7 +20,7 @@ public class baza {
         }
         return con;
     }
-
+    //id uporabnika
     public static int idUporabnik(String mail, String geslo)
     {
         String com = "SELECT id_u FROM uporabniki WHERE email ='" + mail + "' AND pass = '" + geslo + "';";
@@ -41,6 +41,44 @@ public class baza {
         }
        return idu;
     }
+    //front page izpis
+    public static ArrayList<Oglasi> IzpisOglasi()
+    {
+        ArrayList<Oglasi> k_oglasi =  new ArrayList<Oglasi>();
+        String com = " SELECT a.pot_slike,a.letnik,m.ime_m,z.ime_z, u.ime_u,u.priimek_u,o.cena_ura,k.ime_k,o.id_o FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke";
+
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                String pot = rez.getString(1);
+                String letnik = rez.getString(2);
+                String imem = rez.getString(3);
+                String imez = rez.getString(4);
+                String imeu = rez.getString(5);
+                String priimeku = rez.getString(6);
+                String cena = rez.getString(7);
+                String imek = rez.getString(8);
+                int id_o = rez.getInt(9);
+
+
+                Oglasi o = new Oglasi(id_o,cena,pot,imeu,priimeku,letnik,imem,imez,imek);
+                k_oglasi.add(o);
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("idUporabnik() napaka " + e );
+        }
+        return k_oglasi;
+    }
+
+
+
     // Izpiše vse kraje
     public static ArrayList<String> SelectKraji()
     {
