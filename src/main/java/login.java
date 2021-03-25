@@ -20,7 +20,10 @@ public class login {
 
         setActionListeners();
 
+
     }
+
+    public boolean ifClose = false;
 
     private void setActionListeners()
     {
@@ -37,8 +40,8 @@ public class login {
             {
                 int id = baza.idUporabnik(email,pass);
                 id_ = id;
+                ifClose = true;
                 new Mainpage(id);
-
             }
         });
 

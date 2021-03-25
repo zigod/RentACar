@@ -117,4 +117,53 @@ public class baza {
         return potrditev;
     }
 
+    public static ArrayList<String> SelectZnamke()
+    {
+        String com = "SELECT ime_z FROM znamke";
+        ArrayList<String> znamke = new ArrayList<String>();
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                String z = rez.getString(1);
+                znamke.add(z);
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("SelectModeli() napaka " + e );
+        }
+        return znamke;
+
+    }
+
+    public static ArrayList<String> SelectModeli(String znamkaIme)
+    {
+
+        String com = "SELECT ime_m FROM modeli WHERE (id_znamke IN (SELECT id_z FROM znamke WHERE ime_z='" + znamkaIme + "'));";
+        ArrayList<String> modeli = new ArrayList<String>();
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                String m = rez.getString(1);
+                modeli.add(m);
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("SelectModeli() napaka " + e );
+        }
+        return modeli;
+
+    }
+
 }

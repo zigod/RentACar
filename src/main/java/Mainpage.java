@@ -1,17 +1,15 @@
 import javax.swing.*;
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.WindowAdapter;
 
@@ -32,14 +30,15 @@ public class Mainpage {
     private JFormattedTextField ccmTextField;
     private JFormattedTextField KMTextField;
     private JComboBox znamkaBox;
-    private JComboBox modelBox;
+    private JComboBox modeliBox;
     private JFormattedTextField opisTextField;
     private JButton dodajanjeSlikeButton;
     private JButton dodajOglasButton;
     private JButton dodajAvtoButton;
+    private JButton dodajZnamkoModelButton;
 
 
-    public Mainpage(int id)
+    public Mainpage(int id_)
     {
 
 
@@ -47,7 +46,7 @@ public class Mainpage {
         frame.setContentPane(main);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
-        frame.setSize(300, 300);
+        frame.setSize(500, 320);
         frame.setVisible(true);
 
 
@@ -61,6 +60,11 @@ public class Mainpage {
         //System.out.print(id);
 
         setActionListeners();
+
+        ArrayList<String> znamke = new ArrayList<String>();
+        znamke = baza.SelectZnamke();
+        znamke.forEach((s) -> znamkaBox.addItem(s));
+
     }
 
     //delete slike ce user slucajno ne pritisne na USTVARI OGLAS in zapre okno
@@ -101,7 +105,6 @@ public class Mainpage {
                     image = ImageIO.read(file);
                     ImageIO.write(image, "jpg",new File("C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + file.getName()));
                     fileNameToDelete = file.getName();
-                    final  String finalname = fileNameToDelete;
                 } catch (IOException ex) {
                     Logger.getLogger(Mainpage.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -129,6 +132,22 @@ public class Mainpage {
             String opis = opisTextField.getText();
             int id = login.id_;
             fileIfDelete = false;
+
+
+        });
+
+        znamkaBox.addActionListener(e -> {
+            modeliBox.removeAllItems();
+            String znamkaIme = znamkaBox.getSelectedItem().toString();
+
+            System.out.print(znamkaIme);
+
+            ArrayList<String> modeli = new ArrayList<String>();
+            modeli = baza.SelectModeli(znamkaIme);
+
+            System.out.print(modeli);
+
+            modeli.forEach((s) -> modeliBox.addItem(s));
 
 
         });
