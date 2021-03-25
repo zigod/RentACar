@@ -135,7 +135,7 @@ public class baza {
         }
         catch (SQLException e) {
 
-            System.out.println("SelectModeli() napaka " + e );
+            System.out.println("SelectZnamke() napaka " + e );
         }
         return znamke;
 
@@ -164,6 +164,59 @@ public class baza {
         }
         return modeli;
 
+    }
+
+    public static int SelectIdModel(String modelIme)
+    {
+
+        String com = "SELECT id_m FROM modeli WHERE ime_m='"+ modelIme + "';";
+
+        int modelId = 0;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                modelId = rez.getInt(1);
+            }
+
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("SelectIdModel() napaka " + e );
+        }
+        return modelId;
+
+    }
+
+    public static boolean InsertAvto(int letnik_, int kw_, int ccm_, int km_, String opis_, int id_modela, String potSlike, int id_lastnika)
+    {
+        //dodajAvto(letnik_ int, kw_ int, ccm_ int, km_ int, opis_ varchar, id_m_ int, potSlike varchar, id_l_ int)
+        String com = "SELECT dodajAvto("+ letnik_ + "," + kw_ + "," + ccm_ + "," + km_ + ",'" + opis_ + "'," + id_modela + ",'" + potSlike + "'," + id_lastnika + ");";
+        boolean potrditev = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                String l = rez.getString(1);
+                if(l != null)
+                {
+                    potrditev = true;
+                }
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("InsertAvto napaka " + e );
+        }
+        return potrditev;
     }
 
 }

@@ -71,13 +71,13 @@ public class Mainpage {
     public void onExit() {
         if (fileIfDelete == true)
         {
-            File file = new File("C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + fileNameToDelete);
+            File file = new File("C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + fileName);
             System.out.print(file);
             file.delete();
         }
 
     }
-    public static String fileNameToDelete;
+    public static String fileName;
     public boolean fileIfDelete = true;
 
 
@@ -104,7 +104,8 @@ public class Mainpage {
                 try {
                     image = ImageIO.read(file);
                     ImageIO.write(image, "jpg",new File("C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + file.getName()));
-                    fileNameToDelete = file.getName();
+                    fileName = file.getName();
+                    fileIfDelete = true;
                 } catch (IOException ex) {
                     Logger.getLogger(Mainpage.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -125,15 +126,15 @@ public class Mainpage {
             int ccm = Integer.parseInt(ccmTextField.getText());
             int km = Integer.parseInt(KMTextField.getText());
 
-            //NE POZABIT DODAT POL ZA MODELE TI MAJMUN!!!!!!!!
-            //NE POZABIT DODAT POL ZA MODELE TI MAJMUN!!!!!!!!
-            //NE POZABIT DODAT POL ZA MODELE TI MAJMUN!!!!!!!!
-
+            String model = modeliBox.getSelectedItem().toString();
+            int modelId = baza.SelectIdModel(model);
             String opis = opisTextField.getText();
             int id = login.id_;
             fileIfDelete = false;
 
-
+            String potSlike = "C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + fileName;
+            System.out.print(potSlike);
+            baza.InsertAvto(letnik, kw, ccm, km, opis, modelId, potSlike,id);
         });
 
         znamkaBox.addActionListener(e -> {
