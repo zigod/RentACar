@@ -132,6 +132,8 @@ public class Mainpage extends javax.swing.JFrame{
                 try {
                     image = ImageIO.read(file);
                     ImageIO.write(image, "jpg",new File("src\\main\\img\\" + file.getName()));
+                    ImageIO.write(image, "png",new File("src\\main\\img\\" + file.getName()));
+                    ImageIO.write(image, "gif",new File("src\\main\\img\\" + file.getName()));
                     fileName = file.getName();
                     fileIfDelete = true;
                 } catch (IOException ex) {
