@@ -121,7 +121,7 @@ public class Mainpage extends javax.swing.JFrame{
             //Shranjevanje slike
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                    "JPG, GIF, and PNG Images", "jpg", "gif", "png");
+                    "JPG and PNG Images", "jpg", "png");
             chooser.setFileFilter(filter);
             int returnVal = chooser.showOpenDialog(main);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -133,7 +133,6 @@ public class Mainpage extends javax.swing.JFrame{
                     image = ImageIO.read(file);
                     ImageIO.write(image, "jpg",new File("src\\main\\img\\" + file.getName()));
                     ImageIO.write(image, "png",new File("src\\main\\img\\" + file.getName()));
-                    ImageIO.write(image, "gif",new File("src\\main\\img\\" + file.getName()));
                     fileName = file.getName();
                     fileIfDelete = true;
                 } catch (IOException ex) {
