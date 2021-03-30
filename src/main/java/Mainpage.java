@@ -71,11 +71,10 @@ public class Mainpage {
     public void onExit() {
         if (fileIfDelete == true)
         {
-            File file = new File("C:\\Users\\Ziga\\IdeaProjects\\RentACar\\src\\img\\" + fileName);
+            File file = new File("%USERPROFILE%\\IdeaProjects\\RentACar\\src\\img\\" + fileName);
             System.out.print(file);
             file.delete();
         }
-
     }
     public static String fileName;
     public boolean fileIfDelete = true;
