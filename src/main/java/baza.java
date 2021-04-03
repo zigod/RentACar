@@ -231,7 +231,7 @@ public class baza {
     // Izpise vse podatke o oglasu
     public static Oglasi IzpisOglasa(Integer id)
     {
-        String com = "SELECT o.cena_ura,o.naslov_prevzema,k,ime_k,a.letnik,a.kw,a.ccm,a.km,a.opis,m.ime_m,z.ime_z,u.ime_u,u.priimek_u FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u " +
+        String com = "SELECT o.cena_ura,o.naslov_prevzema,k.ime_k,a.letnik,a.kw,a.ccm,a.km,a.opis,m.ime_m,z.ime_z,u.ime_u,u.priimek_u,a.pot_slike FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u " +
                 "ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke ";
 
         Oglasi poglas = new Oglasi();
@@ -252,8 +252,9 @@ public class baza {
             String znamka = rez.getString(10);
             String upoime = rez.getString(11);
             String upopass = rez.getString(12);
+            String slikapot = rez.getString(13);
 
-            poglas = new Oglasi(cena,naslov,imek,letnik,kw,ccm,km,opis,model,znamka,upoime,upopass);
+            poglas = new Oglasi(cena,naslov,imek,letnik,kw,ccm,km,opis,model,znamka,upoime,upopass,slikapot);
 
             }
 

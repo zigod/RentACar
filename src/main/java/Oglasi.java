@@ -11,7 +11,7 @@ public class Oglasi {
     public Integer Letnik;
     public Integer kw;
     public Integer ccm;
-    public String opis;
+    public String Opis;
     public Integer km;
 
     public String imeuporabnika;
@@ -28,7 +28,7 @@ public class Oglasi {
     {
 
     }
-    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas)
+    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas,String slika)
     {
         cena = cen;
         Naslov = nasl;
@@ -37,11 +37,12 @@ public class Oglasi {
         kw = kww;
         ccm = cccm;
         km = kmh;
-        opis = op;
+        Opis = op;
         Model = mod;
         Znamka = zna;
         imeuporabnika = uime;
         priimek = uppas;
+        pot_slika = slika;
     }
     Oglasi(int id,Double cenao, String pot,String imeu,String pri, Integer letn,String mod,String zna, String kraja)
     {
@@ -98,5 +99,11 @@ public class Oglasi {
 
         ImageIcon slika = new ImageIcon((new ImageIcon(getClass().getResource(pot_slika)).getImage().getScaledInstance(320, 240, java.awt.Image.SCALE_SMOOTH)));
         return slika;
+    }
+
+    public String OpisAvtaDolgo()
+    {
+        String opisavta = "Znamka: " + Znamka + "\n" + "Model: " + Model + "\n" + "Letnik: " + Letnik.toString() + "\n"  +  "KW: " + kw.toString()  + "\n" + "CCM: " + ccm.toString()  + "\n" + "KM: " + km.toString() + "\n" + "Opis: "  + Opis + "\n" ;
+        return opisavta;
     }
 }
