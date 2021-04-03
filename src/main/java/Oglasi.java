@@ -2,22 +2,22 @@ import javax.swing.*;
 
 public class Oglasi {
     private int id_o;
-    private String cena;
+    public Double cena;
     public String pot_slika;
 
 
-    private String Znamka;
-    private String Model;
-    private String Letnik;
+    public String Znamka;
+    public String Model;
+    public Integer Letnik;
 
-    private String imeuporabnika;
-    private String priimek;
+    public String imeuporabnika;
+    public String priimek;
 
-    private String kraj;
+    public String kraj;
 
     public String prikaz;
 
-    Oglasi(int id,String cenao, String pot,String imeu,String pri, String letn,String mod,String zna, String kraja)
+    Oglasi(int id,Double cenao, String pot,String imeu,String pri, Integer letn,String mod,String zna, String kraja)
     {
         id_o = id;
         cena = cenao;
@@ -31,6 +31,17 @@ public class Oglasi {
         kraj = kraja;
     }
 
+    Oglasi(String zn, String mod, Integer letn, Double cen, String imeo, String prio, String krajo)
+    {
+        Znamka = zn;
+        Model = mod;
+        Letnik = letn;
+        cena = cen;
+        imeuporabnika = imeo;
+        priimek = prio;
+        kraj = krajo;
+    }
+
 
    //prikazni podatki
    Oglasi(String prikazpodatki,String pot)
@@ -42,12 +53,12 @@ public class Oglasi {
 
     @Override
     public String toString() {
-        return  "<html>"+ OpisAvtaKratko() + "Cena: " + cena + "<br>" +  Uporabnikpod() + "Kraj oglasa: " + kraj + "</html>";
+        return  "<html>"+ OpisAvtaKratko() + "Cena: " + cena.toString() + "<br>" +  Uporabnikpod() + "Kraj oglasa: " + kraj + "</html>";
     }
 
     public String OpisAvtaKratko()
     {
-        String opis = "Znamka: " + Znamka + "<br>" + "Model: " + Model + "<br>" + "Letnik: " + Letnik + "<br>";
+        String opis = "Znamka: " + Znamka + "<br>" + "Model: " + Model + "<br>" + "Letnik: " + Letnik.toString() + "<br>";
         return opis;
     }
     public String Uporabnikpod()

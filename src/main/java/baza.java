@@ -55,12 +55,12 @@ public class baza {
 
             while (rez.next()) {
                 String pot = rez.getString(1);
-                String letnik = rez.getString(2);
+                Integer letnik = rez.getInt(2);
                 String imem = rez.getString(3);
                 String imez = rez.getString(4);
                 String imeu = rez.getString(5);
                 String priimeku = rez.getString(6);
-                String cena = rez.getString(7);
+                Double cena = rez.getDouble(7);
                 String imek = rez.getString(8);
                 int id_o = rez.getInt(9);
 
@@ -202,6 +202,32 @@ public class baza {
         }
         return modeli;
 
+    }
+    //pridobi id oglasa
+    public static Integer OglasId(Oglasi ogid)
+    {
+        String com = " SELECT o.id_o FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u " +
+                "ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela " +
+                "INNER JOIN znamke z ON z.id_z = m.id_znamke WHERE z.ime_z = '" + ogid.Znamka + "' AND m.ime_m = '" + ogid.Model + "' AND a.letnik = " + ogid.Letnik +  " AND o.cena_ura = " + ogid.cena +  "" +
+                " AND u.ime_u  = '" + ogid.imeuporabnika  + "' AND u.priimek_u = '" + ogid.priimek +  "' AND k.ime_k = '" + ogid.kraj  + "';";
+        Integer id = 0;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                 id = rez.getInt(1);
+
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("Napaka pri pridobitvi oglasa " + e );
+        }
+        return id;
     }
 
     public static int SelectIdModel(String modelIme)

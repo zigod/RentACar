@@ -105,11 +105,22 @@ public class Mainpage extends javax.swing.JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 String pod = ((Oglasi)izpispodatkov.getSelectedValue()).prikaz;
-                pod = pod.replace("<html>","");
-                pod = pod.replace("</html>","");
-                pod = pod.replace("<br>","");
 
-                System.out.print(pod);
+                String[] replacestrings = {"<html>","</html>","<br>","Znamka:", "Model:" , "Letnik:",  "Cena:", "Ime oglasevalca:", "Priimek oglasevalca:", "Kraj oglasa:" };
+                for(int i = 0;i < replacestrings.length;i++)
+                {
+                    pod = pod.replace(replacestrings[i],"");
+                }
+                String[] spl = pod.split(" ");
+                Oglasi izbOglas = new Oglasi(spl[1],spl[2],Integer.parseInt(spl[3]),Double.parseDouble(spl[4]),spl[5],spl[6],spl[7]);
+                Integer ido = baza.OglasId(izbOglas);
+                System.out.print(ido);
+                new prikazoglas(ido);
+
+
+
+
+
             }
         });
         dodajOglasButton.addActionListener(e -> {
