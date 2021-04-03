@@ -2,13 +2,17 @@ import javax.swing.*;
 
 public class Oglasi {
     private int id_o;
-    public Double cena;
+
     public String pot_slika;
 
 
     public String Znamka;
     public String Model;
     public Integer Letnik;
+    public Integer kw;
+    public Integer ccm;
+    public String opis;
+    public Integer km;
 
     public String imeuporabnika;
     public String priimek;
@@ -17,6 +21,28 @@ public class Oglasi {
 
     public String prikaz;
 
+    public Double cena;
+    public String Naslov;
+
+    Oglasi()
+    {
+
+    }
+    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas)
+    {
+        cena = cen;
+        Naslov = nasl;
+        kraj = imekr;
+        Letnik = let;
+        kw = kww;
+        ccm = cccm;
+        km = kmh;
+        opis = op;
+        Model = mod;
+        Znamka = zna;
+        imeuporabnika = uime;
+        priimek = uppas;
+    }
     Oglasi(int id,Double cenao, String pot,String imeu,String pri, Integer letn,String mod,String zna, String kraja)
     {
         id_o = id;
