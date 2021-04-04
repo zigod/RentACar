@@ -29,7 +29,7 @@ public class prikazoglas {
         Oglasi poglas = baza.IzpisOglasa(ajdi);
         cenatext.setText("Cena: " + poglas.cena.toString() + "€ (na uro)");
         naslovtext.setText("Naslov prevzema: " + poglas.Naslov + ", " + poglas.kraj);
-        uporabniktext.setText("Lastnik avtomobila" + poglas.imeuporabnika + " " + poglas.priimek);
+        uporabniktext.setText("Lastnik avtomobila: " + poglas.imeuporabnika + " " + poglas.priimek);
         ImageIcon slika = new ImageIcon("src\\main\\img\\" + poglas.pot_slika);
         Imagelabel.setIcon(slika);
         Imagelabel.setText("");
