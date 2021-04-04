@@ -65,7 +65,7 @@ public class Mainpage extends javax.swing.JFrame{
         frame.pack();
         frame.setSize(500, 320);
         frame.setVisible(true);
-
+        System.out.print(uporabnik.id_prijave);
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 onExit();

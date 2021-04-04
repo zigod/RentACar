@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class prikazoglas {
     private JPanel main;
@@ -8,10 +10,12 @@ public class prikazoglas {
     private JLabel cenatext;
     private JLabel naslovtext;
     private JLabel uporabniktext;
+    private JButton rezuredi_button;
     private JLabel imagelabel;
 
     private Integer ajdi;
     private Integer ajdiupo;
+    private Boolean tipoglas;
     public prikazoglas(Integer ido,Integer idu)
     {
         JFrame frame = new JFrame("RentACar");
@@ -20,21 +24,25 @@ public class prikazoglas {
         frame.pack();
         frame.setSize(500, 320);
         frame.setVisible(true);
-
         ajdi = ido;
         ajdiupo = idu;
         Polnjenje();
-        Boolean tipoglas = baza.preverioglas(ido,idu);
+        setActionListeners();
+        tipoglas = baza.preverioglas(ido,idu);
         if(tipoglas == true)
         {
             System.out.println("To je vaš oglas");
+            rezuredi_button.setText("Uredi Avtomobil");
         }
         else
         {
             System.out.println("Ni vaš oglas");
+            rezuredi_button.setText("Rezerviraj Avtomobil");
         }
 
+
     }
+
     private void Polnjenje()
     {
         Oglasi poglas = baza.IzpisOglasa(ajdi);
@@ -49,6 +57,22 @@ public class prikazoglas {
 
 
     }
+    private void setActionListeners()
+    {
+        rezuredi_button.addActionListener(e -> {
+            if(tipoglas == true)
+            {
+                new urejanjeavtomobila();
+            }
+            else
+            {
+                new rezervacija();
+            }
+        });
+    }
+
+
+
 
 
 }
