@@ -10,8 +10,9 @@ public class prikazoglas {
     private JLabel uporabniktext;
     private JLabel imagelabel;
 
-    private int ajdi;
-    public prikazoglas(int id)
+    private Integer ajdi;
+    private Integer ajdiupo;
+    public prikazoglas(Integer ido,Integer idu)
     {
         JFrame frame = new JFrame("RentACar");
         frame.setContentPane(main);
@@ -20,8 +21,18 @@ public class prikazoglas {
         frame.setSize(500, 320);
         frame.setVisible(true);
 
-        ajdi = id;
+        ajdi = ido;
+        ajdiupo = idu;
         Polnjenje();
+        Boolean tipoglas = baza.preverioglas(ido,idu);
+        if(tipoglas == true)
+        {
+            System.out.println("To je vaš oglas");
+        }
+        else
+        {
+            System.out.println("Ni vaš oglas");
+        }
 
     }
     private void Polnjenje()

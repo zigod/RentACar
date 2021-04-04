@@ -51,9 +51,11 @@ public class Mainpage extends javax.swing.JFrame{
     private JTable tabela;
 
     DefaultListModel dm = new DefaultListModel();
+    private Integer idu = 0;
 
 
-    public Mainpage(int id_) {
+    public Mainpage(Integer id_) {
+        idu = id_;
         polnjenje();
 
 
@@ -115,7 +117,7 @@ public class Mainpage extends javax.swing.JFrame{
                 Oglasi izbOglas = new Oglasi(spl[1],spl[2],Integer.parseInt(spl[3]),Double.parseDouble(spl[4]),spl[5],spl[6],spl[7]);
                 Integer ido = baza.OglasId(izbOglas);
                 System.out.print(ido);
-                new prikazoglas(ido);
+                new prikazoglas(ido,idu);
 
 
 

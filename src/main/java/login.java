@@ -7,7 +7,7 @@ public class login {
     private JPasswordField passwordField;
     private JButton prijavaButton;
 
-    public static int id_;
+    public static Integer id_;
 
     public login()
     {
@@ -35,7 +35,7 @@ public class login {
             boolean b = baza.SelectLogin(email, pass);
             if(b == true)
             {
-                int id = baza.idUporabnik(email,pass);
+                Integer id = baza.idUporabnik(email,pass);
                 id_ = id;
                 ifClose = true;
                 new Mainpage(id);
