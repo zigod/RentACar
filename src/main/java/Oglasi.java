@@ -2,13 +2,17 @@ import javax.swing.*;
 
 public class Oglasi {
     private int id_o;
-    public Double cena;
+
     public String pot_slika;
 
 
     public String Znamka;
     public String Model;
     public Integer Letnik;
+    public Integer kw;
+    public Integer ccm;
+    public String Opis;
+    public Integer km;
 
     public String imeuporabnika;
     public String priimek;
@@ -17,6 +21,29 @@ public class Oglasi {
 
     public String prikaz;
 
+    public Double cena;
+    public String Naslov;
+
+    Oglasi()
+    {
+
+    }
+    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas,String slika)
+    {
+        cena = cen;
+        Naslov = nasl;
+        kraj = imekr;
+        Letnik = let;
+        kw = kww;
+        ccm = cccm;
+        km = kmh;
+        Opis = op;
+        Model = mod;
+        Znamka = zna;
+        imeuporabnika = uime;
+        priimek = uppas;
+        pot_slika = slika;
+    }
     Oglasi(int id,Double cenao, String pot,String imeu,String pri, Integer letn,String mod,String zna, String kraja)
     {
         id_o = id;
@@ -72,5 +99,11 @@ public class Oglasi {
 
         ImageIcon slika = new ImageIcon((new ImageIcon(getClass().getResource(pot_slika)).getImage().getScaledInstance(320, 240, java.awt.Image.SCALE_SMOOTH)));
         return slika;
+    }
+
+    public String OpisAvtaDolgo()
+    {
+        String opisavta = "Znamka: " + Znamka + "\n" + "Model: " + Model + "\n" + "Letnik: " + Letnik.toString() + "\n"  +  "KW: " + kw.toString()  + "\n" + "CCM: " + ccm.toString()  + "\n" + "KM: " + km.toString() + "\n" + "Opis: "  + Opis + "\n" ;
+        return opisavta;
     }
 }
