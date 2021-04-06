@@ -1,9 +1,5 @@
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
 
 
 public class baza {
@@ -82,7 +78,7 @@ public class baza {
 
             while (rez.next()) {
                 String k = rez.getString(1);
-                k += "|";
+                k += " | ";
                 k += rez.getString(2);
                 kraji.add(k);
             }
@@ -292,5 +288,94 @@ public class baza {
         return potrditev;
     }
 
+    public static ArrayList<String> SelectAvti(int id)
+    {
+        String com = "SELECT id_a, letnik, kw, ccm, km, opis  FROM avtomobili WHERE (id_lastnika=" + id + ");";
+        ArrayList<String> avti = new ArrayList<String>();
+        String a = "";
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+
+            while (rez.next()) {
+                a += Integer.toString(rez.getInt(1));
+                a += " | ";
+                a += Integer.toString(rez.getInt(2));
+                a += " | ";
+                a += Integer.toString(rez.getInt(3));
+                a += " | ";
+                a += Integer.toString(rez.getInt(4));
+                a += " | ";
+                a += Integer.toString(rez.getInt(5));
+                a += " | ";
+                a += rez.getString(6);
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("SelectAvti1() napaka " + e );
+        }
+
+        String comm = "SELECT m.ime_m  FROM modeli m INNER JOIN avtomobili a ON m.id_m=a.id_modela WHERE (id_lastnika=" + id + ");";
+        String modelIme = "";
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(comm))
+        {
+
+            while (rez.next()) {
+                modelIme = rez.getString(1);
+                a += " | ";
+                a += modelIme;
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("SelectAvti2() napaka " + e );
+        }
+        avti.add(a);
+        return avti;
+    }
+
+    public static boolean InsertOglas(double cena, String kraj, String naslov, int id_avto, int id_uporabnika)
+    {
+        String comm = "SELECT id_k FROM kraji WHERE (ime_k='" + kraj + "') ;";
+        int id_kraja = 0;
+        boolean preveritevOglasInsert = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(comm))
+        {
+            while (rez.next()) {
+                id_kraja = rez.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("InsertAvto-SelectKrajId napaka " + e );
+        }
+
+        String com = "SELECT dodajOglas(" + cena + ", '" + naslov + "', " + id_kraja + ", " + id_avto + ", " + id_uporabnika + ");";
+        System.out.println("SELECT dodajOglas(" + cena + ", '" + naslov + "', " + id_kraja + ", " + id_avto + ", " + id_uporabnika + ");");
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+            while (rez.next()) {
+                preveritevOglasInsert = rez.getBoolean(1);
+            }
+        }
+        catch (SQLException e) {
+
+            System.out.println("InsertOglas napaka " + e );
+        }
+        return preveritevOglasInsert;
+    }
 
 }

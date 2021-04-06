@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -80,24 +82,29 @@ public class Mainpage extends javax.swing.JFrame{
         znamke = baza.SelectZnamke();
         znamke.forEach((s) -> znamkaBox.addItem(s));
 
+        ArrayList<String> kraji = new ArrayList<>();
+        kraji = baza.SelectKraji();
+        kraji.forEach((s) -> krajBox.addItem(s));
 
-
-
-
-
+        ArrayList<String> avti = new ArrayList<>();
+        avti = baza.SelectAvti(id);
+        avti.forEach((s) -> avtoBox.addItem(s));
 
     }
     public void onExit() {
         if (fileIfDelete == true)
         {
             File file = new File("src\\main\\img\\" + fileName);
-            System.out.print(file);
+            //System.out.print(file);
             file.delete();
         }
 
     }
+    int id_a;
+    int id = login.id_;
     public static String fileName;
     public boolean fileIfDelete = true;
+    String kraj;
 
     private void setActionListeners() {
         izpispodatkov.addMouseListener(new MouseAdapter() {
@@ -123,9 +130,28 @@ public class Mainpage extends javax.swing.JFrame{
 
             }
         });
+
+        krajBox.addActionListener(e -> {
+
+            String krajStr = krajBox.getSelectedItem().toString();
+            String[] arrOfStr = krajStr.split(Pattern.quote(" | "), 2);
+            kraj = arrOfStr[0];
+            System.out.println(kraj);
+            System.out.println(Arrays.toString(arrOfStr));
+        });
         dodajOglasButton.addActionListener(e -> {
+            int cena = Integer.parseInt(cenaTextField.getText());
+            String naslov = naslovTextField.getText();
 
-
+            System.out.println(cena + " " + kraj + " " + naslov + " " + id_a + " " + id);
+            boolean preveritevOglasInsertMain = baza.InsertOglas(cena, kraj, naslov, id_a, id);
+            if (preveritevOglasInsertMain == false)
+            {
+                JOptionPane.showMessageDialog(main,
+                        "Oglas ni bil dodan! Mogoče že obstaja ali pa ste se zatipkali.",
+                        "Error!",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         dodajanjeSlikeButton.addActionListener(e -> {
@@ -169,11 +195,10 @@ public class Mainpage extends javax.swing.JFrame{
             String model = modeliBox.getSelectedItem().toString();
             int modelId = baza.SelectIdModel(model);
             String opis = opisTextField.getText();
-            int id = login.id_;
             fileIfDelete = false;
 
             String potSlike = "src\\main\\img\\" + fileName;
-            System.out.print(potSlike);
+            //System.out.print(potSlike);
             baza.InsertAvto(letnik, kw, ccm, km, opis, modelId, potSlike,id);
         });
 
@@ -181,18 +206,26 @@ public class Mainpage extends javax.swing.JFrame{
             modeliBox.removeAllItems();
             String znamkaIme = znamkaBox.getSelectedItem().toString();
 
-            System.out.print(znamkaIme);
+            //System.out.print(znamkaIme);
 
             ArrayList<String> modeli = new ArrayList<String>();
             modeli = baza.SelectModeli(znamkaIme);
 
-            System.out.print(modeli);
+            //System.out.print(modeli);
 
             modeli.forEach((s) -> modeliBox.addItem(s));
 
 
         });
 
+
+        avtoBox.addActionListener(e -> {
+            String str = avtoBox.getSelectedItem().toString();
+            String[] arrOfStr = str.split(" | ", 2);
+            //System.out.println(Arrays.toString(arrOfStr));
+            //System.out.println(arrOfStr[0]);
+            id_a = Integer.parseInt(arrOfStr[0]);
+        });
     }
 
     public void polnjenje()
