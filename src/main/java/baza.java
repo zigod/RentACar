@@ -377,5 +377,7 @@ public class baza {
         }
         return preveritevOglasInsert;
     }
+    
+
 
 }
