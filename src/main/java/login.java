@@ -33,6 +33,14 @@ public class login {
 
             String pass = new String(password);
             //System.out.print(username);
+
+            try {
+                pass = encrypt_decrypt.encrypt_(pass);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+
             boolean b = baza.SelectLogin(email, pass);
             if(b == true)
             {
@@ -47,6 +55,12 @@ public class login {
 
 
 
+            }
+            else{
+                JOptionPane.showMessageDialog(login,
+                        "Narobno geslo!",
+                        "Error!",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
         regbutton.addActionListener(e -> {

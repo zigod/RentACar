@@ -1,5 +1,6 @@
 import javax.swing.*;
 
+
 public class registracija {
     private JPanel registracijaform;
     private JFormattedTextField ime_text;
@@ -47,6 +48,15 @@ public class registracija {
             String kraj = krajbox.getSelectedItem().toString();
             String[] imek = kraj.split("\\|");
             String pass = geslotext.getText();
+
+
+            try {
+                pass = encrypt_decrypt.encrypt_(pass);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+            System.out.println(pass);
 
 
             boolean ok = baza.registracija(ime,email,pass,telefon,datum,imek[0],priimek);

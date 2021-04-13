@@ -5,9 +5,5 @@ public class Index {
        new login();
        // new Mainpage();
         System.out.println("jonuh");
-
-
-
-
     }
 }
