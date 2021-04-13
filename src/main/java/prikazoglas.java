@@ -66,7 +66,7 @@ public class prikazoglas {
             }
             else
             {
-                new rezervacija();
+                new rezervacija(ajdi);
             }
         });
     }

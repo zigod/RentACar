@@ -3,7 +3,7 @@ import javax.swing.*;
 public class rezervacija {
     private JPanel main;
 
-    public rezervacija()
+    public rezervacija(int ido)
     {
         JFrame frame = new JFrame("RentACar");
         frame.setContentPane(main);
