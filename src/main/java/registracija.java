@@ -51,6 +51,12 @@ public class registracija {
 
             boolean ok = baza.registracija(ime,email,pass,telefon,datum,imek[0],priimek);
             System.out.print(ok);
+            if(ok == true)
+            {
+                Integer id = baza.idUporabnik(email,pass);
+                uporabnik.id_prijave = id;
+                new Mainpage(id);
+            }
 
 
         });

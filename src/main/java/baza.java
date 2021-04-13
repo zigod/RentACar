@@ -261,6 +261,25 @@ public class baza {
         return poglas;
     }
 
+    public static boolean preverioglas(Integer ido, Integer idu)
+    {
+        String com = "SELECT preverioglas(" + idu + "," + ido + ")";
+        boolean ok = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+            rez.next();
+            ok = rez.getBoolean(1);
+        }
+        catch (SQLException e) {
+
+            System.out.println("InsertAvto napaka " + e );
+        }
+       return ok;
+    }
+
     public static boolean InsertAvto(int letnik_, int kw_, int ccm_, int km_, String opis_, int id_modela, String potSlike, int id_lastnika)
     {
         //dodajAvto(letnik_ int, kw_ int, ccm_ int, km_ int, opis_ varchar, id_m_ int, potSlike varchar, id_l_ int)

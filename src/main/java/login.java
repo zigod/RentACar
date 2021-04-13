@@ -6,8 +6,9 @@ public class login {
     private JFormattedTextField emailField;
     private JPasswordField passwordField;
     private JButton prijavaButton;
+    private JButton regbutton;
 
-    public static int id_;
+    public static Integer id_;
 
     public login()
     {
@@ -35,12 +36,21 @@ public class login {
             boolean b = baza.SelectLogin(email, pass);
             if(b == true)
             {
-                int id = baza.idUporabnik(email,pass);
+                Integer id = baza.idUporabnik(email,pass);
+                uporabnik.id_prijave = id;
+
                 id_ = id;
                 ifClose = true;
+
+
                 new Mainpage(id);
 
+
+
             }
+        });
+        regbutton.addActionListener(e -> {
+        new registracija();
         });
 
     }
