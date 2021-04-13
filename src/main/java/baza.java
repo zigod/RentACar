@@ -361,6 +361,26 @@ public class baza {
         return avti;
     }
 
+    public static boolean RezervacijaOglasa(String zacd,String koncd, Integer ido)
+    {
+        String com = "SELECT rezervacija('" + zacd + "','" + koncd + "'," + ido + "," + uporabnik.id_prijave + ");";
+        boolean potrditev = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+            rez.next();
+            potrditev = rez.getBoolean(1);
+        }
+        catch (SQLException e) {
+
+            System.out.println("Rezervacija napaka + e ");
+        }
+        return potrditev;
+
+    }
+
     public static boolean InsertOglas(double cena, String kraj, String naslov, int id_avto, int id_uporabnika)
     {
         String comm = "SELECT id_k FROM kraji WHERE (ime_k='" + kraj + "') ;";
