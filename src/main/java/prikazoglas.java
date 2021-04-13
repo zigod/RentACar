@@ -11,6 +11,7 @@ public class prikazoglas {
     private JLabel naslovtext;
     private JLabel uporabniktext;
     private JButton rezuredi_button;
+    private JList zasedendatum;
     private JLabel imagelabel;
 
     private Integer ajdi;
