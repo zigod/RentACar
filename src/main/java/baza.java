@@ -381,18 +381,18 @@ public class baza {
 
     }
 
-    public static ArrayList<String> Zasedeni_casi(Integer id_oglas,String cas)
+    public static ArrayList<String> Zasedeni_casi(Integer id_oglas)
     {
         ArrayList<String> list = new ArrayList<String>();
         String time = java.time.LocalDate.now() + " " + java.time.LocalTime.now();
-        String com = "SELECT zac_datum,kon_datum FROM zaseden_cas WHERE kon_datum > '" + cas + "' AND  id_oglasa = " + id_oglas + ";";
+        String com = "SELECT zac_datum,kon_datum FROM zaseden_cas WHERE kon_datum > '" + time + "' AND  id_oglasa = " + id_oglas + ";";
         try (Connection con = connect();
              Statement stat = con.createStatement();
              ResultSet rez = stat.executeQuery(com))
         {
             while (rez.next())
             {
-                list.add("Od " +  rez.getString(1 ) + " " + rez.getString(2));
+                list.add("Od:" +  rez.getString(1 ) + " Do: " + rez.getString(2));
             }
 
         }
