@@ -361,6 +361,49 @@ public class baza {
         return avti;
     }
 
+    public static boolean RezervacijaOglasa(String zacd,String koncd, Integer ido)
+    {
+        String com = "SELECT rezervacija('" + zacd + "','" + koncd + "'," + ido + "," + uporabnik.id_prijave + ");";
+        boolean potrditev = false;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+            rez.next();
+            potrditev = rez.getBoolean(1);
+        }
+        catch (SQLException e) {
+
+            System.out.println("Rezervacija napaka + e ");
+        }
+        return potrditev;
+
+    }
+
+    public static ArrayList<String> Zasedeni_casi(Integer id_oglas)
+    {
+        ArrayList<String> list = new ArrayList<String>();
+        String time = java.time.LocalDate.now() + " " + java.time.LocalTime.now();
+        String com = "SELECT zac_datum,kon_datum FROM zaseden_cas WHERE kon_datum > '" + time + "' AND  id_oglasa = " + id_oglas + ";";
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com))
+        {
+            while (rez.next())
+            {
+                list.add("Od:" +  rez.getString(1 ) + " Do: " + rez.getString(2));
+            }
+
+        }
+        catch (SQLException e) {
+
+            System.out.println("izpis datumov napaka + e ");
+        }
+        return list;
+
+    }
+
     public static boolean InsertOglas(double cena, String kraj, String naslov, int id_avto, int id_uporabnika)
     {
         String comm = "SELECT id_k FROM kraji WHERE (ime_k='" + kraj + "') ;";

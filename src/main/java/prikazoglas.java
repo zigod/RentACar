@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class prikazoglas {
     private JPanel main;
@@ -11,6 +12,7 @@ public class prikazoglas {
     private JLabel naslovtext;
     private JLabel uporabniktext;
     private JButton rezuredi_button;
+    private JList zasedendatum;
     private JLabel imagelabel;
 
     private Integer ajdi;
@@ -53,6 +55,16 @@ public class prikazoglas {
         Imagelabel.setIcon(slika);
         Imagelabel.setText("");
         avtoarea.setText(poglas.OpisAvtaDolgo());
+
+        // LIST ZASEDENIH CASOV
+        ArrayList<String> casi = baza.Zasedeni_casi(ajdi);
+        DefaultListModel dm = new DefaultListModel();
+        for (String x : casi)
+        {
+            dm.addElement(x);
+        }
+        zasedendatum.setModel(dm);
+
 
 
 
