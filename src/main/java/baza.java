@@ -66,6 +66,40 @@ public class baza {
         return k_oglasi;
     }
 
+    public static ArrayList<Oglasi> SearchOglasi(String search) {
+        ArrayList<Oglasi> k_oglasi = new ArrayList<Oglasi>();
+        String com ="SELECT a.pot_slike,a.letnik,m.ime_m,z.ime_z, u.ime_u,u.priimek_u,o.cena_ura,k.ime_k,o.id_o\n" +
+                "FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke\n" +
+                "WHERE (CAST(a.letnik AS TEXT) LIKE '%" + search + "%') OR (m.ime_m LIKE '%" + search + "%') OR (z.ime_z LIKE '%" + search + "%') OR (u.ime_u LIKE '%" + search + "%') OR (u.priimek_u LIKE '%" + search + "%') OR (CAST(o.cena_ura AS TEXT) LIKE '%" + search + "%') OR (k.ime_k LIKE '%" + search + "%');";
+
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com)) {
+
+            while (rez.next()) {
+                String pot = rez.getString(1);
+                Integer letnik = rez.getInt(2);
+                String imem = rez.getString(3);
+                String imez = rez.getString(4);
+                String imeu = rez.getString(5);
+                String priimeku = rez.getString(6);
+                Double cena = rez.getDouble(7);
+                String imek = rez.getString(8);
+                int id_o = rez.getInt(9);
+
+
+                Oglasi o = new Oglasi(id_o, cena, pot, imeu, priimeku, letnik, imem, imez, imek);
+                k_oglasi.add(o);
+            }
+
+        } catch (SQLException e) {
+
+            System.out.println("searchOglasi napaka " + e);
+        }
+        return k_oglasi;
+    }
+
 
     // Izpiše vse kraje
     public static ArrayList<String> SelectKraji() {
@@ -275,7 +309,7 @@ public class baza {
         }
         catch (SQLException e) {
 
-            System.out.println("InsertAvto napaka " + e );
+            System.out.println("preveriOglas napaka " + e );
         }
        return ok;
     }
@@ -438,6 +472,53 @@ public class baza {
             System.out.println("InsertOglas napaka " + e );
         }
         return preveritevOglasInsert;
+    }
+
+    public static void InsertZnamka(String ime, String opis)
+    {
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("INSERT INTO znamke(ime_z, opis_z) VALUES('" + ime + "','" +  opis + "');");
+        }
+        catch (SQLException e) {
+
+            System.out.println("InsertZnamka napaka " + e );
+        }
+    }
+
+    public static void InsertModel(String ime, String opis, String znamka)
+    {
+        String comm = "SELECT id_z FROM znamke WHERE ime_z ='" + znamka +"';";
+        int id_znamke = 0;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(comm))
+        {
+            while (rez.next()) {
+                id_znamke = rez.getInt(1);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("InsertModel-SelectId napaka " + e );
+        }
+
+        if (id_znamke == 0){
+            System.out.println("HALO nek znamka bug je wtf");
+        }
+
+        //System.out.println("ime je: " + ime + " Opis je: " + " Znamka je: " +  id_znamke);
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("INSERT INTO modeli(ime_m, opis_m, id_znamke) VALUES('" + ime + "', '" + opis + "', '" + id_znamke + "');");
+        }
+        catch (SQLException e) {
+
+            System.out.println("InsertModel napaka " + e );
+        }
     }
 
 

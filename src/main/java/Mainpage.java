@@ -2,6 +2,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -10,9 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +47,8 @@ public class Mainpage extends javax.swing.JFrame{
     private JButton dodajanjeSlikeButton;
     private JButton dodajAvtoButton;
     private JButton dodajZnamkoModelButton;
+    private JTextField searchField;
+    private JButton searchButton;
     private JScrollPane scrollmain;
     private JTable tabela;
 
@@ -60,12 +60,16 @@ public class Mainpage extends javax.swing.JFrame{
         idu = id_;
         polnjenje();
 
+        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+
+
 
         JFrame frame = new JFrame("RentACar");
         frame.setContentPane(main);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
-        frame.setSize(500, 320);
+        frame.setSize(1000, screensize.height);
+        centreWindow(frame);
         frame.setVisible(true);
         System.out.print(uporabnik.id_prijave);
         frame.addWindowListener(new WindowAdapter() {
@@ -93,6 +97,14 @@ public class Mainpage extends javax.swing.JFrame{
         avti.forEach((s) -> avtoBox.addItem(s));
 
     }
+
+    public static void centreWindow(Window frame) {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() - frame.getWidth()) / 2);
+        int y = (int) ((dimension.getHeight() - frame.getHeight()) / 2);
+        frame.setLocation(x, y);
+    }
+
     public void onExit() {
         if (fileIfDelete == true)
         {
@@ -125,16 +137,15 @@ public class Mainpage extends javax.swing.JFrame{
                 Integer ido = baza.OglasId(izbOglas);
                 System.out.print(ido);
                 new prikazoglas(ido,idu);
-
-
-
-
-
             }
         });
 
-        krajBox.addActionListener(e -> {
+        searchButton.addActionListener(e -> {
+            String search = searchField.getText();
+            searchPolnjenje(search);
+        });
 
+        krajBox.addActionListener(e -> {
             String krajStr = krajBox.getSelectedItem().toString();
             String[] arrOfStr = krajStr.split(Pattern.quote(" | "), 2);
             kraj = arrOfStr[0];
@@ -202,6 +213,12 @@ public class Mainpage extends javax.swing.JFrame{
             String potSlike = "src\\main\\img\\" + fileName;
             //System.out.print(potSlike);
             baza.InsertAvto(letnik, kw, ccm, km, opis, modelId, potSlike,id);
+
+            letnikTextField.setText(null);
+            kwTextField.setText(null);
+            ccmTextField.setText(null);
+            KMTextField.setText(null);
+            opisTextField.setText(null);
         });
 
         znamkaBox.addActionListener(e -> {
@@ -228,6 +245,10 @@ public class Mainpage extends javax.swing.JFrame{
             //System.out.println(arrOfStr[0]);
             id_a = Integer.parseInt(arrOfStr[0]);
         });
+
+        dodajZnamkoModelButton.addActionListener(e -> {
+            new dodajanjeModelaZnamke();
+        });
     }
 
     public void polnjenje()
@@ -240,8 +261,25 @@ public class Mainpage extends javax.swing.JFrame{
             String podatki = ogl.toString();
             String pot = ogl.pot_slika;
             dm.addElement(new Oglasi(podatki,pot));
+        }
+        izpispodatkov.setCellRenderer(new RenderPls());
+        izpispodatkov.setModel(dm);
 
+    }
 
+    public void searchPolnjenje(String search)
+    {
+        ArrayList<Oglasi> oglas = baza.SearchOglasi(search);
+
+        System.out.println(oglas);
+
+        dm.clear();
+
+        for (Oglasi ogl : oglas)
+        {
+            String podatki = ogl.toString();
+            String pot = ogl.pot_slika;
+            dm.addElement(new Oglasi(podatki,pot));
         }
         izpispodatkov.setCellRenderer(new RenderPls());
         izpispodatkov.setModel(dm);

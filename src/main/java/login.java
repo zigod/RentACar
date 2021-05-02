@@ -1,7 +1,7 @@
 import javax.swing.*;
+import java.awt.Dimension;
 
 public class login {
-
     private JPanel login;
     private JFormattedTextField emailField;
     private JPasswordField passwordField;
@@ -16,7 +16,9 @@ public class login {
         frame.setContentPane(login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(300, 150);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(500, 300);
+        frame.setMinimumSize(new Dimension(400, 250));
         frame.setVisible(true);
 
         setActionListeners();
