@@ -71,7 +71,10 @@ import java.awt.Checkbox;
 import java.time.YearMonth;
 
 
+
 public class prikazoglas {
+
+
     private JPanel main;
     private JTextArea avtoarea;
     private JLabel Imagelabel;
@@ -80,13 +83,15 @@ public class prikazoglas {
     private JLabel uporabniktext;
     private JButton rezuredi_button;
     private DateTimePicker picker;
-    private CalendarPanel zasedeniCasi;
+    private CalendarPanel zasedeniCasi = new CalendarPanel();
     private JList zasedendatum;
     private JLabel imagelabel;
 
     private Integer ajdi;
     private Integer ajdiupo;
     private Boolean tipoglas;
+
+
 
 
     public prikazoglas(Integer ido,Integer idu)
@@ -114,11 +119,10 @@ public class prikazoglas {
         }
 
         DatePickerSettings dateSettings = new DatePickerSettings();
-        DatePicker datePicker = new DatePicker(dateSettings);
+        zasedeniCasi.setSettings(dateSettings);
         dateSettings.setHighlightPolicy(new SampleHighlightPolicy());
         dateSettings.setVetoPolicy(new SampleDateVetoPolicy());
 
-        zasedeniCasi.setSettings(dateSettings);
     }
 
     private void Polnjenje()
@@ -222,11 +226,4 @@ public class prikazoglas {
             return null;
         }
     }
-
-
-
-
-
-
-
 }
