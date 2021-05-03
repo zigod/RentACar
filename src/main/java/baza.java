@@ -1,4 +1,6 @@
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -523,6 +525,43 @@ public class baza {
 
             System.out.println("InsertModel napaka " + e );
         }
+    }
+
+    public static void Rezervacija(Integer id_oglas, Integer id_uporabnik, String zac_datum, String kon_datum)
+    {
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("INSERT INTO zaseden_cas(id_oglasa, id_uporabnika, zac_datum, kon_datum) VALUES(" + id_oglas + ", " + id_uporabnik + ", '" + zac_datum + "', '" + kon_datum + "');");
+        }
+        catch (SQLException e) {
+
+            System.out.println("Rezervacija napaka " + e );
+        }
+    }
+
+    public static ArrayList<String> CasiVDnevu(String datum)
+    {
+        ArrayList<String> casi = new ArrayList<>();
+        String comm = "SELECT zac_datum, kon_datum FROM zaseden_cas WHERE (CAST(zac_datum AS text) LIKE '" + datum + "%');";
+        String cas;
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(comm))
+        {
+            while (rez.next()) {
+                cas = rez.getString(1);
+                cas += " | ";
+                cas += rez.getString(2);
+                casi.add(cas);
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("InsertModel-SelectId napaka " + e );
+        }
+
+        return casi;
     }
 
 
