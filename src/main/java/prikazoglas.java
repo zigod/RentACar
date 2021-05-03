@@ -56,14 +56,14 @@ public class prikazoglas {
         Imagelabel.setText("");
         avtoarea.setText(poglas.OpisAvtaDolgo());
 
-        // LIST ZASEDENIH CASOV
+        /* LIST ZASEDENIH CASOV
         ArrayList<String> casi = baza.Zasedeni_casi(ajdi);
         DefaultListModel dm = new DefaultListModel();
         for (String x : casi)
         {
             dm.addElement(x);
         }
-        zasedendatum.setModel(dm);
+        zasedendatum.setModel(dm);*/
 
 
 

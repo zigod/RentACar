@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class baza {
@@ -67,10 +68,12 @@ public class baza {
     }
 
     public static ArrayList<Oglasi> SearchOglasi(String search) {
+
+        search = search.toLowerCase();
         ArrayList<Oglasi> k_oglasi = new ArrayList<Oglasi>();
         String com ="SELECT a.pot_slike,a.letnik,m.ime_m,z.ime_z, u.ime_u,u.priimek_u,o.cena_ura,k.ime_k,o.id_o\n" +
                 "FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke\n" +
-                "WHERE (CAST(a.letnik AS TEXT) LIKE '%" + search + "%') OR (m.ime_m LIKE '%" + search + "%') OR (z.ime_z LIKE '%" + search + "%') OR (u.ime_u LIKE '%" + search + "%') OR (u.priimek_u LIKE '%" + search + "%') OR (CAST(o.cena_ura AS TEXT) LIKE '%" + search + "%') OR (k.ime_k LIKE '%" + search + "%');";
+                "WHERE (CAST(a.letnik AS TEXT) LIKE '%" + search + "%') OR (LOWER(m.ime_m) LIKE '%" + search + "%') OR (LOWER(z.ime_z) LIKE '%" + search + "%') OR (LOWER(u.ime_u) LIKE '%" + search + "%') OR (LOWER(u.priimek_u) LIKE '%" + search + "%') OR (CAST(o.cena_ura AS TEXT) LIKE '%" + search + "%') OR (LOWER(k.ime_k) LIKE '%" + search + "%');";
 
 
         try (Connection con = connect();
