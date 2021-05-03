@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RentACar-master.iml" filepath="$PROJECT_DIR$/.idea/RentACar-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mavenrent.iml" filepath="$PROJECT_DIR$/mavenrent.iml" />
     </modules>
   </component>
 </project>
