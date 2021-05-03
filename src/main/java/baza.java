@@ -401,26 +401,6 @@ public class baza {
         return avti;
     }
 
-    public static boolean RezervacijaOglasa(String zacd,String koncd, Integer ido)
-    {
-        String com = "SELECT rezervacija('" + zacd + "','" + koncd + "'," + ido + "," + uporabnik.id_prijave + ");";
-        boolean potrditev = false;
-
-        try (Connection con = connect();
-             Statement stat = con.createStatement();
-             ResultSet rez = stat.executeQuery(com))
-        {
-            rez.next();
-            potrditev = rez.getBoolean(1);
-        }
-        catch (SQLException e) {
-
-            System.out.println("Rezervacija napaka + e ");
-        }
-        return potrditev;
-
-    }
-
     public static ArrayList<String> Zasedeni_casi(Integer id_oglas)
     {
         ArrayList<String> list = new ArrayList<String>();
@@ -562,6 +542,29 @@ public class baza {
         }
 
         return casi;
+    }
+
+    public static void izbrisiOglas(Integer id_oglas)
+    {
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("DELETE FROM zaseden_cas WHERE id_oglasa =" + id_oglas + ";");
+        }
+        catch (SQLException e) {
+
+            System.out.println("izbrisiOglas-DeleteCas napaka " + e );
+        }
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("DELETE FROM oglasi WHERE id_o =" + id_oglas + ";");
+        }
+        catch (SQLException e) {
+
+            System.out.println("izbrisiOglas-DeleteOglas napaka " + e );
+        }
     }
 
 

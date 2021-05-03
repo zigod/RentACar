@@ -7,13 +7,12 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.components.TimePickerSettings;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.time.*;
 import java.util.Locale;
 import static org.junit.Assert.assertTrue;
 import javax.swing.*;
 import javax.swing.ImageIcon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import com.github.lgooddatepicker.components.CalendarPanel;
 import com.github.lgooddatepicker.zinternaltools.DemoPanel;
@@ -24,8 +23,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.ActionEvent;
 import java.util.Locale;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import com.github.lgooddatepicker.components.DatePickerSettings.DateArea;
@@ -60,12 +57,13 @@ import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import com.github.lgooddatepicker.optionalusertools.CalendarListener;
 import com.github.lgooddatepicker.zinternaltools.YearMonthChangeEvent;
+import com.sun.tools.javac.Main;
 
 
 public class prikazoglas {
 
 
-    private JPanel main;
+    public JPanel main;
     private JTextArea avtoarea;
     private JLabel Imagelabel;
     private JLabel cenatext;
@@ -76,6 +74,7 @@ public class prikazoglas {
     private DatePicker picker;
     private JComboBox doCasiBox;
     private JButton rezervirajButton;
+    private JButton deleteButton;
     private JList zasedendatum;
     private JLabel imagelabel;
 
@@ -87,15 +86,17 @@ public class prikazoglas {
     String[] times1 = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"};
     String[] times2 = new String[]{"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24"};
 
+    public JFrame frame = new JFrame("RentACar");
 
     public prikazoglas(Integer ido,Integer idu)
     {
 
+
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 
-        JFrame frame = new JFrame("RentACar");
+
         frame.setContentPane(main);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setSize(1000, screensize.height);
         centreWindow(frame);
@@ -105,19 +106,35 @@ public class prikazoglas {
         ajdiupo = idu;
         Polnjenje();
         setActionListeners();
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                new Mainpage(ajdiupo);
+                frame.dispose();
+            }
+        });
 
 
         tipoglas = baza.preverioglas(ido,idu);
         if(tipoglas == true)
         {
             System.out.println("To je vaš oglas");
-            rezuredi_button.setText("Uredi Avtomobil");
+            rezuredi_button.setText("Uredi oglas");
+            rezervirajButton.setText("Nemoreš rezervirati svoj oglas");
+            rezervirajButton.setEnabled(false);
+            deleteButton.setText("Izbriši oglas");
+            deleteButton.setEnabled(true);
+            deleteButton.setVisible(true);
         }
         else
         {
             System.out.println("Ni vaš oglas");
-            rezuredi_button.setText("Rezerviraj Avtomobil");
+            deleteButton.setText("Nemoreš izbrisati drugega oglasa");
+            deleteButton.setEnabled(false);
+            deleteButton.setVisible(false);
         }
+
+
+
 
     }
 
@@ -135,15 +152,6 @@ public class prikazoglas {
         Imagelabel.setText("");
         avtoarea.setText(poglas.OpisAvtaDolgo());
 
-        /* LIST ZASEDENIH CASOV
-        ArrayList<String> casi = baza.Zasedeni_casi(ajdi);
-        DefaultListModel dm = new DefaultListModel();
-        for (String x : casi)
-        {
-            dm.addElement(x);
-        }
-        zasedendatum.setModel(dm);*/
-
 
 
     }
@@ -152,14 +160,16 @@ public class prikazoglas {
 
     private void setActionListeners()
     {
+        deleteButton.addActionListener(e -> {
+            baza.izbrisiOglas(ajdi);
+            frame.dispose();
+            new Mainpage(ajdiupo);
+        });
+
         rezuredi_button.addActionListener(e -> {
             if(tipoglas == true)
             {
                 new urejanjeavtomobila();
-            }
-            else
-            {
-                new rezervacija(ajdi);
             }
         });
 
@@ -296,4 +306,6 @@ public class prikazoglas {
         }
         return -1;
     }
+
+
 }

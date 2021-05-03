@@ -64,6 +64,8 @@ public class Mainpage extends javax.swing.JFrame{
     private Integer idu = 0;
 
 
+    public JFrame frame = new JFrame("RentACar");
+
     public Mainpage(Integer id_) {
         idu = id_;
         polnjenje();
@@ -72,7 +74,6 @@ public class Mainpage extends javax.swing.JFrame{
 
 
 
-        JFrame frame = new JFrame("RentACar");
         frame.setContentPane(main);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
@@ -144,7 +145,9 @@ public class Mainpage extends javax.swing.JFrame{
                 Oglasi izbOglas = new Oglasi(spl[1],spl[2],Integer.parseInt(spl[3]),Double.parseDouble(spl[4]),spl[5],spl[6],spl[7]);
                 Integer ido = baza.OglasId(izbOglas);
                 System.out.print(ido);
+                frame.dispose();
                 new prikazoglas(ido,idu);
+
             }
         });
 
