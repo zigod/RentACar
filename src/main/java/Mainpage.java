@@ -84,18 +84,18 @@ public class Mainpage extends javax.swing.JFrame{
 
         setActionListeners();
 
-        ArrayList<String> znamke = new ArrayList<String>();
-        znamke = baza.SelectZnamke();
-        znamke.forEach((s) -> znamkaBox.addItem(s));
 
         ArrayList<String> kraji = new ArrayList<>();
         kraji = baza.SelectKraji();
         kraji.forEach((s) -> krajBox.addItem(s));
 
+        ArrayList<String> znamke = new ArrayList<String>();
+        znamke = baza.SelectZnamke();
+        znamke.forEach((s) -> znamkaBox.addItem(s));
+
         ArrayList<String> avti = new ArrayList<>();
         avti = baza.SelectAvti(id);
         avti.forEach((s) -> avtoBox.addItem(s));
-
     }
 
     public static void centreWindow(Window frame) {
@@ -165,6 +165,7 @@ public class Mainpage extends javax.swing.JFrame{
                         "Error!",
                         JOptionPane.ERROR_MESSAGE);
             }
+            polnjenje();
         });
 
         dodajanjeSlikeButton.addActionListener(e -> {
@@ -210,7 +211,7 @@ public class Mainpage extends javax.swing.JFrame{
             String opis = opisTextField.getText();
             fileIfDelete = false;
 
-            String potSlike = "src\\main\\img\\" + fileName;
+            String potSlike = fileName;
             //System.out.print(potSlike);
             baza.InsertAvto(letnik, kw, ccm, km, opis, modelId, potSlike,id);
 
@@ -219,6 +220,13 @@ public class Mainpage extends javax.swing.JFrame{
             ccmTextField.setText(null);
             KMTextField.setText(null);
             opisTextField.setText(null);
+
+
+            avtoBox.removeAllItems();
+            ArrayList<String> avti = new ArrayList<>();
+            avti = baza.SelectAvti(id);
+            avti.forEach((s) -> avtoBox.addItem(s));
+
         });
 
         znamkaBox.addActionListener(e -> {
@@ -249,6 +257,7 @@ public class Mainpage extends javax.swing.JFrame{
         dodajZnamkoModelButton.addActionListener(e -> {
             new dodajanjeModelaZnamke();
         });
+
     }
 
     public void polnjenje()
@@ -264,6 +273,9 @@ public class Mainpage extends javax.swing.JFrame{
         }
         izpispodatkov.setCellRenderer(new RenderPls());
         izpispodatkov.setModel(dm);
+
+
+
 
     }
 

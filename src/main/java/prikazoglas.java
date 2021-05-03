@@ -71,7 +71,10 @@ import java.awt.Checkbox;
 import java.time.YearMonth;
 
 
+
 public class prikazoglas {
+
+
     private JPanel main;
     private JTextArea avtoarea;
     private JLabel Imagelabel;
@@ -79,8 +82,9 @@ public class prikazoglas {
     private JLabel naslovtext;
     private JLabel uporabniktext;
     private JButton rezuredi_button;
-    private DateTimePicker picker;
-    private CalendarPanel zasedeniCasi;
+    private JComboBox odCasiBox;
+    private DatePicker picker;
+    private JComboBox doCasiBox;
     private JList zasedendatum;
     private JLabel imagelabel;
 
@@ -88,19 +92,27 @@ public class prikazoglas {
     private Integer ajdiupo;
     private Boolean tipoglas;
 
+    Integer[] times = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
+
 
     public prikazoglas(Integer ido,Integer idu)
     {
+        Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
+
         JFrame frame = new JFrame("RentACar");
         frame.setContentPane(main);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(500, 320);
+        frame.setSize(1000, screensize.height);
         frame.setVisible(true);
         ajdi = ido;
+        System.out.println("ajdi je " + ajdi);
         ajdiupo = idu;
         Polnjenje();
         setActionListeners();
+        urePoljenje();
+
+
         tipoglas = baza.preverioglas(ido,idu);
         if(tipoglas == true)
         {
@@ -113,22 +125,19 @@ public class prikazoglas {
             rezuredi_button.setText("Rezerviraj Avtomobil");
         }
 
-        DatePickerSettings dateSettings = new DatePickerSettings();
-        DatePicker datePicker = new DatePicker(dateSettings);
-        dateSettings.setHighlightPolicy(new SampleHighlightPolicy());
-        dateSettings.setVetoPolicy(new SampleDateVetoPolicy());
-
-        zasedeniCasi.setSettings(dateSettings);
     }
 
     private void Polnjenje()
     {
         Oglasi poglas = baza.IzpisOglasa(ajdi);
+        System.out.println("ajdi je se kr" + ajdi);
         cenatext.setText("Cena: " + poglas.cena.toString() + "€ (na uro)");
         naslovtext.setText("Naslov prevzema: " + poglas.Naslov + ", " + poglas.kraj);
         uporabniktext.setText("Lastnik avtomobila: " + poglas.imeuporabnika + " " + poglas.priimek);
         ImageIcon slika = new ImageIcon("src\\main\\img\\" + poglas.pot_slika);
-        Imagelabel.setIcon(slika);
+        Image scaledImage = slika.getImage().getScaledInstance(500, 500, Image.SCALE_FAST);
+        ImageIcon malaslika = new ImageIcon(scaledImage);
+        Imagelabel.setIcon(malaslika);
         Imagelabel.setText("");
         avtoarea.setText(poglas.OpisAvtaDolgo());
 
@@ -144,6 +153,7 @@ public class prikazoglas {
 
 
     }
+
     private void setActionListeners()
     {
         rezuredi_button.addActionListener(e -> {
@@ -157,76 +167,20 @@ public class prikazoglas {
             }
         });
 
-        picker.addDateTimeChangeListener(e -> {
-            TimePicker time = picker.getTimePicker();
-            System.out.println(time);
+        picker.addDateChangeListener(e -> {
+            LocalDate date = picker.getDate();
 
-            DatePicker date = picker.getDatePicker();
+
 
         });
     }
 
 
-    private static class SampleDateVetoPolicy implements DateVetoPolicy {
-
-        /**
-         * isDateAllowed, Return true if a date should be allowed, or false if a date should be
-         * vetoed.
-         */
-        @Override
-        public boolean isDateAllowed(LocalDate date) {
-            // Disallow days 7 to 11.
-            if ((date.getDayOfMonth() >= 7) && (date.getDayOfMonth() <= 11)) {
-                return false;
-            }
-            // Disallow odd numbered saturdays.
-            if ((date.getDayOfWeek() == DayOfWeek.SATURDAY) && ((date.getDayOfMonth() % 2) == 1)) {
-                return false;
-            }
-            // Allow all other days.
-            return true;
+    private void urePoljenje(){
+        for (Integer x : times)
+        {
+            odCasiBox.addItem(x);
+            doCasiBox.addItem(x);
         }
     }
-
-    private static class SampleHighlightPolicy implements DateHighlightPolicy {
-
-        /**
-         * getHighlightInformationOrNull, Implement this function to indicate if a date should be
-         * highlighted, and what highlighting details should be used for the highlighted date.
-         *
-         * If a date should be highlighted, then return an instance of HighlightInformation. If the
-         * date should not be highlighted, then return null.
-         *
-         * You may (optionally) fill out the fields in the HighlightInformation class to give any
-         * particular highlighted day a unique foreground color, background color, or tooltip text.
-         * If the color fields are null, then the default highlighting colors will be used. If the
-         * tooltip field is null (or empty), then no tooltip will be displayed.
-         *
-         * Dates that are passed to this function will never be null.
-         */
-        @Override
-        public HighlightInformation getHighlightInformationOrNull(LocalDate date) {
-            // Highlight a chosen date, with a tooltip and a red background color.
-            if (date.getDayOfMonth() == 25) {
-                return new HighlightInformation(Color.red, null, "It's the 25th!");
-            }
-            // Highlight all Saturdays with a unique background and foreground color.
-            if (date.getDayOfWeek() == DayOfWeek.SATURDAY) {
-                return new HighlightInformation(Color.orange, Color.yellow, "It's Saturday!");
-            }
-            // Highlight all Sundays with default colors and a tooltip.
-            if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-                return new HighlightInformation(null, null, "It's Sunday!");
-            }
-            // All other days should not be highlighted.
-            return null;
-        }
-    }
-
-
-
-
-
-
-
 }

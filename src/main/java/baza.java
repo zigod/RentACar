@@ -265,7 +265,7 @@ public class baza {
     public static Oglasi IzpisOglasa(Integer id)
     {
         String com = "SELECT o.cena_ura,o.naslov_prevzema,k.ime_k,a.letnik,a.kw,a.ccm,a.km,a.opis,m.ime_m,z.ime_z,u.ime_u,u.priimek_u,a.pot_slike FROM kraji k INNER JOIN oglasi o ON o.id_kraja = k.id_k INNER JOIN uporabniki u " +
-                "ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke ";
+                "ON u.id_u = o.id_uporabnika INNER JOIN avtomobili a ON a.id_a = o.id_avtomobila INNER JOIN modeli m ON m.id_m = a.id_modela INNER JOIN znamke z ON z.id_z = m.id_znamke WHERE o.id_o = " + id +";";
 
         Oglasi poglas = new Oglasi();
         try (Connection con = connect();
@@ -367,6 +367,8 @@ public class baza {
                 a += Integer.toString(rez.getInt(5));
                 a += " | ";
                 a += rez.getString(6);
+                avti.add(a);
+                a = "";
             }
 
         }
@@ -394,7 +396,6 @@ public class baza {
 
             System.out.println("SelectAvti2() napaka " + e );
         }
-        avti.add(a);
         return avti;
     }
 
