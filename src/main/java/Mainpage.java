@@ -26,6 +26,14 @@ import javax.swing.JScrollPane;
 import javax.swing.Renderer;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+
+import java.io.File;
 
 public class Mainpage extends javax.swing.JFrame{
     private JPanel main;
@@ -221,6 +229,7 @@ public class Mainpage extends javax.swing.JFrame{
             KMTextField.setText(null);
             opisTextField.setText(null);
 
+            AWS(potSlike);
 
             avtoBox.removeAllItems();
             ArrayList<String> avti = new ArrayList<>();
@@ -247,6 +256,11 @@ public class Mainpage extends javax.swing.JFrame{
 
 
         avtoBox.addActionListener(e -> {
+            avtoBox.removeAllItems();
+            ArrayList<String> avti = new ArrayList<>();
+            avti = baza.SelectAvti(id);
+            avti.forEach((s) -> avtoBox.addItem(s));
+
             String str = avtoBox.getSelectedItem().toString();
             String[] arrOfStr = str.split(" | ", 2);
             //System.out.println(Arrays.toString(arrOfStr));
@@ -296,6 +310,30 @@ public class Mainpage extends javax.swing.JFrame{
         izpispodatkov.setCellRenderer(new RenderPls());
         izpispodatkov.setModel(dm);
 
+    }
+
+    public void AWS(String path)
+    {
+        AWSCredentials credentials = new BasicAWSCredentials(
+                "AKIAZE5W2FP77YGXVEWB",
+                "nmW6v2YwYDx6PFXyhQYREZVrClR7cgZlZqgNvHBp"
+        );
+
+
+
+
+        String bucket_name = "rentcar-upb";
+        String key_name = path;
+        String filepath ="src\\main\\img\\" + path;
+
+        System.out.format("Uploading %s to S3 bucket %s...\n", filepath, bucket_name);
+        final AmazonS3 s3 = AmazonS3ClientBuilder.standard().withRegion(Regions.EU_CENTRAL_1).build();
+        try {
+            s3.putObject(bucket_name, key_name, new File(filepath));
+        } catch (AmazonServiceException e) {
+            System.err.println(e.getErrorMessage());
+            System.exit(1);
+        }
     }
 
 
