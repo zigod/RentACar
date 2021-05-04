@@ -1,4 +1,7 @@
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.regex.Pattern;
 
 
 public class registracija {
@@ -19,13 +22,20 @@ public class registracija {
 
         JFrame frame = new JFrame("Registracija");
         frame.setContentPane(registracijaform);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
-        frame.setSize(750, 500);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(550, 400);
 
         frame.setVisible(true);
         Fill_krajcombo();
         setActionListeners();
+
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                frame.dispose();
+            }
+        });
 
 
 
@@ -46,7 +56,7 @@ public class registracija {
             String priimek = pri_text.getText();
             String datum = darum_text.getText();
             String kraj = krajbox.getSelectedItem().toString();
-            String[] imek = kraj.split("\\|");
+            String[] imek = kraj.split(Pattern.quote(" | "), 2);
             String pass = geslotext.getText();
 
 

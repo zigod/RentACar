@@ -62,12 +62,14 @@ public class Mainpage extends javax.swing.JFrame{
 
     DefaultListModel dm = new DefaultListModel();
     private Integer idu = 0;
+    public int id;
 
 
     public JFrame frame = new JFrame("RentACar");
 
     public Mainpage(Integer id_) {
         idu = id_;
+        id = id_;
         polnjenje();
 
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -124,7 +126,6 @@ public class Mainpage extends javax.swing.JFrame{
 
     }
     int id_a;
-    int id = login.id_;
     public static String fileName;
     public boolean fileIfDelete = true;
     String kraj;
@@ -260,6 +261,7 @@ public class Mainpage extends javax.swing.JFrame{
 
         avtoBox.addActionListener(e -> {
             avtoBox.removeAllItems();
+
             ArrayList<String> avti = new ArrayList<>();
             avti = baza.SelectAvti(id);
             avti.forEach((s) -> avtoBox.addItem(s));

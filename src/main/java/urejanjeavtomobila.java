@@ -19,6 +19,7 @@ public class urejanjeavtomobila {
         frame.setContentPane(main);
         frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setSize(500, 300);
         frame.setMinimumSize(new Dimension(400, 250));
         frame.setVisible(true);
