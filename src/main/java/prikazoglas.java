@@ -75,6 +75,7 @@ public class prikazoglas {
     private JComboBox doCasiBox;
     private JButton rezervirajButton;
     private JButton deleteButton;
+    private JLabel cenaLabel;
     private JList zasedendatum;
     private JLabel imagelabel;
 
@@ -144,7 +145,7 @@ public class prikazoglas {
 
 
     }
-
+    public double cena_;
 
     private void Polnjenje()
     {
@@ -168,6 +169,19 @@ public class prikazoglas {
 
     private void setActionListeners()
     {
+        doCasiBox.addActionListener(e -> {
+            String prvi = odCasiBox.getSelectedItem().toString();
+            String drugi = doCasiBox.getSelectedItem().toString();
+
+            Integer vecje = findIndex(times, drugi);
+            Integer manjse = findIndex(times, prvi);
+
+            Integer st = vecje - manjse;
+
+            double vsota = st * cena_;
+
+            cenaLabel.setText("Stalo vas bo: " + vsota + "€");
+        });
 
         deleteButton.addActionListener(e -> {
             baza.izbrisiOglas(ajdi);
