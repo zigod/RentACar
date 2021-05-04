@@ -147,7 +147,6 @@ public class prikazoglas {
     }
     public double cena_;
 
-    public double cena_;
 
     private void Polnjenje()
     {
@@ -174,6 +173,7 @@ public class prikazoglas {
     private void setActionListeners()
     {
         doCasiBox.addActionListener(e -> {
+
             String prvi = odCasiBox.getSelectedItem().toString();
             String drugi = doCasiBox.getSelectedItem().toString();
 
@@ -196,7 +196,8 @@ public class prikazoglas {
         rezuredi_button.addActionListener(e -> {
             if(tipoglas == true)
             {
-                new urejanjeavtomobila(ajdi);
+                new urejanjeavtomobila(ajdi, ajdiupo);
+                frame.dispose();
             }
         });
 

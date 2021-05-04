@@ -10,6 +10,8 @@ public class login {
 
     public static Integer id_;
 
+    JFrame frame = new JFrame("Login");
+
     public login()
     {
         JFrame frame = new JFrame("Login");
@@ -51,7 +53,6 @@ public class login {
 
                 id_ = id;
                 ifClose = true;
-
 
                 new Mainpage(id);
 

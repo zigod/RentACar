@@ -1,4 +1,8 @@
+import com.sun.tools.javac.Main;
+
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class dodajanjeModelaZnamke {
@@ -11,15 +15,21 @@ public class dodajanjeModelaZnamke {
     private JButton dodajModel;
     private JComboBox znamkeBox;
 
-    public dodajanjeModelaZnamke(){
+    public dodajanjeModelaZnamke(Integer idu){
 
         JFrame frame = new JFrame("RentACar");
         frame.setContentPane(dodajanje);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         frame.pack();
         frame.setSize(500, 320);
         frame.setVisible(true);
         setActionListeners();
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent evt) {
+                frame.dispose();
+                new Mainpage(idu);
+            }
+        });
 
         ArrayList<String> znamke = new ArrayList<String>();
         znamke = baza.SelectZnamke();

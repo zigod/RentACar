@@ -272,7 +272,8 @@ public class Mainpage extends javax.swing.JFrame{
         });
 
         dodajZnamkoModelButton.addActionListener(e -> {
-            new dodajanjeModelaZnamke();
+            new dodajanjeModelaZnamke(idu);
+            frame.dispose();
         });
 
     }
