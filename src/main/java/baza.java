@@ -263,6 +263,44 @@ public class baza {
 
     }
 
+
+    //select cene in naslova
+    public static String Selectcenanaslov(Integer ido) {
+
+        String izp = "";
+        String com = "SELECT o.cena_ura,o.naslov_prevzema,k.ime_k FROM oglasi o INNER JOIN kraji k ON k.id_k = o.id_kraja WHERE id_o = " + ido + ";";
+
+        try (Connection con = connect();
+             Statement stat = con.createStatement();
+             ResultSet rez = stat.executeQuery(com)) {
+
+            rez.next();
+            double lol = rez.getDouble(1);
+            izp = String.valueOf(lol) + ":" + rez.getString(2)+ ":" + rez.getString(3);
+
+
+        } catch (SQLException e) {
+
+            System.out.println("select cena naslov napaka " + e);
+        }
+        return izp;
+
+    }
+
+    //update oglas
+    public static void updateOglas(Integer ido,double cena,String naslov,String krajime)
+    {
+        try (Connection con = connect();
+             Statement stat = con.createStatement())
+        {
+            stat.executeUpdate("UPDATE oglasi SET cena_ura = " + cena + ", naslov_prevzema = '" + naslov + "', id_kraja = (SELECT id_k FROM kraji WHERE ime_k = '" + krajime + "') WHERE id_o = " + ido + ";");
+        }
+        catch (SQLException e) {
+
+            System.out.println("update oglas napaka " + e );
+        }
+
+    }
     // Izpise vse podatke o oglasu
     public static Oglasi IzpisOglasa(Integer id)
     {

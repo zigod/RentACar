@@ -125,6 +125,9 @@ public class prikazoglas {
             deleteButton.setText("Izbriši oglas");
             deleteButton.setEnabled(true);
             deleteButton.setVisible(true);
+
+            rezuredi_button.setEnabled(true);
+            rezuredi_button.setVisible(true);
         }
         else
         {
@@ -132,12 +135,17 @@ public class prikazoglas {
             deleteButton.setText("Nemoreš izbrisati drugega oglasa");
             deleteButton.setEnabled(false);
             deleteButton.setVisible(false);
+
+            rezuredi_button.setText("Nemoreš urediti drugega oglasa");
+            rezuredi_button.setEnabled(false);
+            rezuredi_button.setVisible(false);
         }
 
 
 
 
     }
+    public double cena_;
 
     public double cena_;
 
@@ -188,7 +196,7 @@ public class prikazoglas {
         rezuredi_button.addActionListener(e -> {
             if(tipoglas == true)
             {
-                new urejanjeavtomobila();
+                new urejanjeavtomobila(ajdi);
             }
         });
 
