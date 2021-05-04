@@ -23,12 +23,13 @@ public class Oglasi {
 
     public Double cena;
     public String Naslov;
+    public String zadn;
 
     Oglasi()
     {
 
     }
-    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas,String slika)
+    Oglasi(Double cen,String nasl,String imekr, Integer let, Integer kww, Integer cccm,Integer kmh,String op, String mod, String zna, String uime, String uppas,String slika,String zadnja)
     {
         cena = cen;
         Naslov = nasl;
@@ -43,6 +44,7 @@ public class Oglasi {
         imeuporabnika = uime;
         priimek = uppas;
         pot_slika = slika;
+        zadn = zadnja;
     }
     Oglasi(int id,Double cenao, String pot,String imeu,String pri, Integer letn,String mod,String zna, String kraja)
     {

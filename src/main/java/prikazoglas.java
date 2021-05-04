@@ -76,6 +76,7 @@ public class prikazoglas {
     private JButton rezervirajButton;
     private JButton deleteButton;
     private JLabel cenaLabel;
+    private JLabel zadntext;
     private JList zasedendatum;
     private JLabel imagelabel;
 
@@ -163,6 +164,8 @@ public class prikazoglas {
         Imagelabel.setIcon(malaslika);
         Imagelabel.setText("");
         avtoarea.setText(poglas.OpisAvtaDolgo());
+
+        zadntext.setText("Nazadnje je rezerviral uporabnik: " + poglas.zadn);
 
 
 
