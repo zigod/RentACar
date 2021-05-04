@@ -90,9 +90,11 @@ public class prikazoglas {
 
     public JFrame frame = new JFrame("RentACar");
 
+    public Integer id_oglas;
+
     public prikazoglas(Integer ido,Integer idu)
     {
-
+        id_oglas = ido;
 
         Dimension screensize = Toolkit.getDefaultToolkit().getScreenSize();
 
@@ -151,6 +153,7 @@ public class prikazoglas {
 
     private void Polnjenje()
     {
+        System.out.println(ajdi);
         Oglasi poglas = baza.IzpisOglasa(ajdi);
         //System.out.println("ajdi je se kr" + ajdi);
 
@@ -175,56 +178,28 @@ public class prikazoglas {
 
     private void setActionListeners()
     {
-        doCasiBox.addActionListener(e -> {
-
-            String prvi = odCasiBox.getSelectedItem().toString();
-            String drugi = doCasiBox.getSelectedItem().toString();
-
-            Integer vecje = findIndex(times, drugi);
-            Integer manjse = findIndex(times, prvi);
-
-            Integer st = vecje - manjse;
-
-            double vsota = st * cena_;
-
-            cenaLabel.setText("Stalo vas bo: " + vsota + "€");
-        });
-
-        deleteButton.addActionListener(e -> {
-            baza.izbrisiOglas(ajdi);
-            frame.dispose();
-            new Mainpage(ajdiupo);
-        });
-
-        rezuredi_button.addActionListener(e -> {
-            if(tipoglas == true)
-            {
-                new urejanjeavtomobila(ajdi, ajdiupo);
-                frame.dispose();
-            }
-        });
-
         picker.addDateChangeListener(e -> {
+
+            times1 = times.clone();
+            times2 = times.clone();
             datum = picker.getDate();
 
-            ArrayList<String> damn = baza.CasiVDnevu(datum.toString());
+            System.out.println(" tuki je pa datum : " + datum);
+            System.out.println(" tuki mas pa id_oglasa: " + id_oglas);
+
+            ArrayList<String> damn = baza.CasiVDnevu(datum.toString(), id_oglas);
+            System.out.println("na tu mas tk array: " + damn);
             for (String s : damn) {
-                //System.out.println(s);
                 String[] cas = s.split(Pattern.quote(" | "), 2);
-
-                /*for (String ca : cas) {
-                    System.out.println("brale lej" + ca);
-                }*/
-
                 String[] ura1 = cas[0].split(" ", 2);
                 String[] st1 = ura1[1].split(":", 3);
-                //System.out.print(st1[0]);
+
+                System.out.println(" na neki za test: " + s);
 
                 String najmanjsi = st1[0];
 
                 String[] ura2 = cas[1].split(" ", 2);
                 String[] st2 = ura2[1].split(":", 3);
-                //System.out.print(st2[0]);
 
                 String najvecji = st2[0];
                 Integer najvecje = Integer.parseInt(najvecji);
@@ -265,8 +240,50 @@ public class prikazoglas {
             }
 
 
+            doCasiBox.setEnabled(true);
+            odCasiBox.setEnabled(true);
+            System.out.println("wtf eo");
             urePoljenje();
         });
+
+        doCasiBox.addActionListener(e -> {
+
+            String prvi = "";
+            String drugi = "";
+            if (odCasiBox.getSelectedItem() == null)
+            {
+
+            }
+            else {
+                prvi = odCasiBox.getSelectedItem().toString();
+                drugi = doCasiBox.getSelectedItem().toString();
+            }
+
+            Integer vecje = findIndex(times, drugi);
+            Integer manjse = findIndex(times, prvi);
+
+            Integer st = vecje - manjse;
+
+            double vsota = st * cena_;
+
+            cenaLabel.setText("Stalo vas bo: " + vsota + "€");
+        });
+
+        deleteButton.addActionListener(e -> {
+            baza.izbrisiOglas(ajdi);
+            frame.dispose();
+            new Mainpage(ajdiupo);
+        });
+
+        rezuredi_button.addActionListener(e -> {
+            if(tipoglas == true)
+            {
+                new urejanjeavtomobila(ajdi, ajdiupo);
+                frame.dispose();
+            }
+        });
+
+
 
         rezervirajButton.addActionListener(e -> {
             String odUra = odCasiBox.getSelectedItem().toString();

@@ -388,7 +388,7 @@ public class baza {
 
     public static ArrayList<String> SelectAvti(int id)
     {
-        String com = "SELECT id_a, letnik, kw, ccm, km, opis  FROM avtomobili WHERE (id_lastnika=" + id + ");";
+        String com = "SELECT a.id_a, a.letnik, a.kw, a.ccm, a.km, a.opis, m.ime_m  FROM avtomobili a INNER JOIN modeli m ON a.id_modela=m.id_m WHERE (id_lastnika=" + id + ");";
         ArrayList<String> avti = new ArrayList<String>();
         String a = "";
 
@@ -409,6 +409,8 @@ public class baza {
                 a += Integer.toString(rez.getInt(5));
                 a += " | ";
                 a += rez.getString(6);
+                a += " | ";
+                a += rez.getString(7);
                 avti.add(a);
                 a = "";
             }
@@ -560,10 +562,10 @@ public class baza {
         }
     }
 
-    public static ArrayList<String> CasiVDnevu(String datum)
+    public static ArrayList<String> CasiVDnevu(String datum, Integer id_oglas)
     {
         ArrayList<String> casi = new ArrayList<>();
-        String comm = "SELECT zac_datum, kon_datum FROM zaseden_cas WHERE (CAST(zac_datum AS text) LIKE '" + datum + "%');";
+        String comm = "SELECT zac_datum, kon_datum FROM zaseden_cas WHERE (CAST(zac_datum AS text) LIKE '" + datum + "%') AND (id_oglasa =" + id_oglas + ");";
         String cas;
 
         try (Connection con = connect();

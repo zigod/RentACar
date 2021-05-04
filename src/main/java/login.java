@@ -14,7 +14,6 @@ public class login {
 
     public login()
     {
-        JFrame frame = new JFrame("Login");
         frame.setContentPane(login);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -55,6 +54,7 @@ public class login {
                 ifClose = true;
 
                 new Mainpage(id);
+                frame.dispose();
 
 
 

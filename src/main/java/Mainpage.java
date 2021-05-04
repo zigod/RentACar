@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -145,7 +146,6 @@ public class Mainpage extends javax.swing.JFrame{
                 String[] spl = pod.split(" ");
                 Oglasi izbOglas = new Oglasi(spl[1],spl[2],Integer.parseInt(spl[3]),Double.parseDouble(spl[4]),spl[5],spl[6],spl[7]);
                 Integer ido = baza.OglasId(izbOglas);
-                System.out.print(ido);
                 frame.dispose();
                 new prikazoglas(ido,idu);
 
@@ -178,6 +178,7 @@ public class Mainpage extends javax.swing.JFrame{
                         JOptionPane.ERROR_MESSAGE);
             }
             polnjenje();
+
         });
 
         dodajanjeSlikeButton.addActionListener(e -> {
@@ -260,13 +261,9 @@ public class Mainpage extends javax.swing.JFrame{
 
 
         avtoBox.addActionListener(e -> {
-            avtoBox.removeAllItems();
-
-            ArrayList<String> avti = new ArrayList<>();
-            avti = baza.SelectAvti(id);
-            avti.forEach((s) -> avtoBox.addItem(s));
 
             String str = avtoBox.getSelectedItem().toString();
+            System.out.println(str);
             String[] arrOfStr = str.split(" | ", 2);
             //System.out.println(Arrays.toString(arrOfStr));
             //System.out.println(arrOfStr[0]);
